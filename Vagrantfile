@@ -13,7 +13,6 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "ubuntu/bionic64"
-  config.vm.box = "ubuntu/bionic64"
   # config.ssh.insert_key = true
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -38,7 +37,7 @@ Vagrant.configure("2") do |config|
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-   config.vm.network "public_network", ip: "192.168.1.200"
+   config.vm.network "public_network", ip: "192.168.10.200"
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
@@ -70,17 +69,17 @@ Vagrant.configure("2") do |config|
      apt-get update
      apt-get install -y apache2
      ufw allow in "Apache"
-     apt install -y curl mysql-server 
+     apt-get install -y curl mysql-server 
      /bin/sh /vagrant/mysql_secure.sh
-     mysqladmin stat 
-     apt install -y php libapache2-mod-php php-mysql
-     apt install -y php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip
-     mkdir /var/www/wordpress
+#     mysqladmin stat 
+     apt-get install -y php libapache2-mod-php php-mysql
+     apt-get install -y php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip
+     mkdir -p /var/www/wordpress
      cp /vagrant/wordpress.conf /etc/apache2/sites-available/wordpress.conf
      ln -s /etc/apache2/sites-available/wordpress.conf /etc/apache2/sites-enabled/
      cd /tmp; cp /vagrant/latest.tar.gz /tmp/latest.tar.gz; tar -xzvf latest.tar.gz; touch /tmp/wordpress/.htaccess
      cp /vagrant/wp-config.php /tmp/wordpress/wp-config.php
-     mkdir /tmp/wordpress/wp-content/upgrade
+     mkdir -p /tmp/wordpress/wp-content/upgrade
      cp -a /tmp/wordpress/. /var/www/wordpress; chown -R ubuntu:ubuntu /var/www/wordpress     
      /usr/bin/find /var/www/wordpress/. -type d | xargs -n5 chmod 755 
      /usr/bin/find /var/www/wordpress/. -type f | xargs -n5 chmod 644 
